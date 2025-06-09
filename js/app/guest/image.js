@@ -2,27 +2,26 @@ import { progress } from './progress.js';
 import { cache } from '../../connection/cache.js';
 
 export const image = (() => {
-
-    /**
-     * @type {NodeListOf<HTMLImageElement>|null}
-     */
+    /** @type {NodeListOf<HTMLImageElement>|null} */
     let images = null;
 
-    /**
-     * @type {ReturnType<typeof cache>|null}
-     */
+    /** @type {ReturnType<typeof cache>|null} */
     let c = null;
 
     let hasSrc = false;
 
-    /**
-     * @type {object[]}
-     */
+    /** @type {object[]} */
     const urlCache = [];
 
-    /**
+    // Define the list of local background animation images
+    const localImages = Array.from({ length: 9 }, (_, i) => `./assets/images/bg/bg${i + 1}.webp`);
+
+    // Function to get a random local background image URL
+    const getRandomLocalImageUrl = () => localImages[Math.floor(Math.random() * localImages.length)];
+
+    /** 
      * @param {string} src 
-     * @returns {Promise<HTMLImageElement>}
+     * @returns {Promise<HTMLImageElement>} 
      */
     const loadedImage = (src) => new Promise((res, rej) => {
         const i = new Image();
@@ -31,10 +30,10 @@ export const image = (() => {
         i.src = src;
     });
 
-    /**
+    /** 
      * @param {HTMLImageElement} el 
      * @param {string} src 
-     * @returns {Promise<void>}
+     * @returns {Promise<void>} 
      */
     const appendImage = (el, src) => loadedImage(src).then((img) => {
         el.width = img.naturalWidth;
@@ -45,21 +44,24 @@ export const image = (() => {
         progress.complete('image');
     });
 
-    /**
+    /** 
      * @param {HTMLImageElement} el 
-     * @returns {void}
+     * @returns {void} 
      */
     const getByFetch = (el) => {
+        // Use random URL for slide-desktop images, otherwise use data-src
+        const isBgAnimation = el.closest('.slide-desktop') !== null;
+        const url = isBgAnimation ? getRandomLocalImageUrl() : el.getAttribute('data-src');
         urlCache.push({
-            url: el.getAttribute('data-src'),
+            url: url,
             res: (url) => appendImage(el, url),
             rej: () => progress.invalid('image'),
         });
     };
 
-    /**
+    /** 
      * @param {HTMLImageElement} el 
-     * @returns {void}
+     * @returns {void} 
      */
     const getByDefault = (el) => {
         el.onerror = () => progress.invalid('image');
@@ -76,14 +78,10 @@ export const image = (() => {
         }
     };
 
-    /**
-     * @returns {boolean}
-     */
+    /** @returns {boolean} */
     const hasDataSrc = () => hasSrc;
 
-    /**
-     * @returns {Promise<void>}
-     */
+    /** @returns {Promise<void>} */
     const load = async () => {
         const arrImages = Array.from(images);
 
@@ -97,22 +95,23 @@ export const image = (() => {
 
         await c.open();
         await Promise.allSettled(arrImages.filter((el) => el.getAttribute('data-fetch-img') === 'high').map((el) => {
-            return c.get(el.getAttribute('data-src'), progress.getAbort())
+            // Use random URL for slide-desktop images, otherwise use data-src
+            const isBgAnimation = el.closest('.slide-desktop') !== null;
+            const url = isBgAnimation ? getRandomLocalImageUrl() : el.getAttribute('data-src');
+            return c.get(url, progress.getAbort())
                 .then((i) => appendImage(el, i))
                 .then(() => el.classList.remove('opacity-0'));
         }));
         await c.run(urlCache, progress.getAbort());
     };
 
-    /**
+    /** 
      * @param {string} blobUrl 
-     * @returns {Promise<Response>}
+     * @returns {Promise<Response>} 
      */
     const download = (blobUrl) => c.download(blobUrl, `image_${Date.now()}`);
 
-    /**
-     * @returns {object}
-     */
+    /** @returns {object} */
     const init = () => {
         c = cache('image');
         images = document.querySelectorAll('img');
