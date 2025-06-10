@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id" data-bs-theme="auto">
+<html lang="id" data-bs-theme="light">
 
 <head>
     <!-- Common Tag -->
@@ -71,62 +71,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" integrity="sha256-GqiEX9BuR1rv5zPU5Vs2qS/NSHl1BJyBcjQYJ6ycwD4=" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/guest.css">
 
-    <!-- Custom Styles -->
-    <style>
-        :root {
-            --primary-maroon: #800000;
-            --dark-maroon: #660000;
-            --light-maroon: #990000;
-            --cream: #FFFDD0;
-            --gold: #FFD700;
-            --soft-gray: #D3D3D3;
-        }
-
-        .text-primary-maroon {
-            color: var(--primary-maroon);
-        }
-
-        .bg-primary-maroon {
-            background-color: var(--primary-maroon);
-        }
-
-        .border-primary-maroon {
-            border-color: var(--primary-maroon);
-        }
-
-        .btn-outline-maroon {
-            color: var(--primary-maroon);
-            border-color: var(--primary-maroon);
-        }
-
-        .btn-outline-maroon:hover {
-            color: #fff;
-            background-color: var(--primary-maroon);
-        }
-
-        .btn-primary-maroon {
-            background-color: var(--primary-maroon);
-            border-color: var(--primary-maroon);
-            color: #fff;
-        }
-
-        .btn-primary-maroon:hover {
-            background-color: var(--dark-maroon);
-            border-color: var(--dark-maroon);
-        }
-
-        .text-gold {
-            color: var(--gold);
-        }
-
-        .color-theme-svg path {
-            fill: var(--primary-maroon);
-        }
-
-        .navbar-nav .nav-link.active {
-            color: var(--primary-maroon);
-        }
-    </style>
+    
 
     <!-- Dependencies JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" integrity="sha256-pQBbLkFHcP1cy0C8IhoSdxlm0CtcH5yJ2ki9jjgR03c=" crossorigin="anonymous"></script>
@@ -677,8 +622,9 @@ Bukan karena bertemu lalu berjodoh, melainkan karena jodoh, kami dipertemukan. D
                 <h2 class="font-esthetic mb-4 text-primary-maroon" style="font-size: 2.25rem;">Juliansyah & Ejah</h2>
                 <div id="guest-name" data-message="Kepada Yth Bapak/Ibu/Saudara/i"></div>
 
-                <button type="button" class="btn btn-primary-maroon shadow rounded-4 mt-3 mx-auto" onclick="undangan.guest.open(this)"><i class="fa-solid fa-envelope-open fa-bounce me-2"></i>Open Invitation</button>
-            </div>
+<button type="button" class="btn btn-primary-maroon shadow rounded-4 mt-3 mx-auto text-white" style="background-color: var(--primary-maroon); padding: 10px 20px; font-size: 1rem; border: 2px solid var(--primary-maroon);" onclick="undangan.guest.open(this)">
+    <i class="fa-solid fa-envelope-open fa-bounce me-2"></i>Open Invitation
+</button>            </div>
         </div>
     </div>
 
@@ -703,7 +649,7 @@ Bukan karena bertemu lalu berjodoh, melainkan karena jodoh, kami dipertemukan. D
                 <div class="progress" role="progressbar" style="height: 0.5rem;" aria-label="progress bar">
                     <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
                 </div>
-                <small class="d-none mt-1 text-theme-auto" id="progress-info" style="font-size: 0.8rem;">Booting application...</small>
+                <small class="d-none mt-1 text-theme-auto" id="progress-info" style="font-size: 0.8rem;">Memuat Gambar...</small>
                 <noscript>
                     <small class="mt-1 text-danger">Sorry, this invitation requires javascript to work</small>
                 </noscript>
