@@ -1,0 +1,218 @@
+/* styles.css */
+
+/* Import external CSS files (assuming they exist) */
+@import url("common.css");
+@import url("animation.css");
+
+/* Global CSS Variables */
+:root {
+    --primary-maroon: #800000;
+    --dark-maroon: #660000;
+    --light-maroon: #990000;
+    --cream: #FFFDD0;
+    --gold: #FFD700;
+    --soft-gray: #D3D3D3;
+    --text-color: #000000;
+    --background-color: #ffffff;
+}
+
+[data-bs-theme="dark"] {
+    --primary-maroon: #cc6666; /* lighter maroon for better visibility in dark mode */
+    --dark-maroon: #993333;
+    --light-maroon: #ff9999;
+    --cream: #333300;
+    --gold: #cc9900;
+    --soft-gray: #666666;
+    --text-color: #ffffff;
+    --background-color: #121212;
+}
+
+/* Custom Classes */
+.text-primary-maroon {
+    color: var(--primary-maroon);
+}
+
+.bg-primary-maroon {
+    background-color: var(--primary-maroon);
+}
+
+.border-primary-maroon {
+    border-color: var(--primary-maroon);
+}
+
+.btn-outline-maroon {
+    color: var(--primary-maroon);
+    border-color: var(--primary-maroon);
+}
+
+.btn-outline-maroon:hover {
+    color: var(--background-color);
+    background-color: var(--primary-maroon);
+}
+
+.btn-primary-maroon {
+    background-color: var(--primary-maroon);
+    border-color: var(--primary-maroon);
+    color: var(--background-color);
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: 2px solid var(--primary-maroon);
+}
+
+.btn-primary-maroon:hover {
+    background-color: var(--dark-maroon);
+    border-color: var(--dark-maroon);
+    color: var(--background-color);
+}
+
+.btn-primary-maroon.text-white {
+    color: #ffffff !important; /* Ensures text is white for better contrast */
+}
+
+[data-bs-theme="dark"] .btn-primary-maroon {
+    background-color: var(--primary-maroon); /* #cc6666 in dark mode */
+    border-color: var(--primary-maroon);
+    color: #ffffff; /* Explicitly white text in dark mode */
+}
+
+[data-bs-theme="dark"] .btn-primary-maroon:hover {
+    background-color: var(--dark-maroon); /* #993333 in dark mode */
+    border-color: var(--dark-maroon);
+}
+
+.text-gold {
+    color: var(--gold);
+}
+
+.color-theme-svg path {
+    fill: var(--primary-maroon);
+}
+
+.navbar-nav .nav-link.active {
+    color: var(--primary-maroon);
+}
+
+.text-theme {
+    color: var(--text-color);
+}
+
+.bg-light-dark {
+    background-color: var(--background-color);
+}
+
+.bg-white-black {
+    background-color: var(--background-color);
+}
+
+.form-label, p, small, h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color);
+}
+
+.btn {
+    color: var(--text-color);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);
+}
+
+/* Additional Styles from CSS Files */
+html {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+.with-scrollbar {
+    scrollbar-width: auto !important;
+    -ms-overflow-style: auto !important;
+}
+
+.font-esthetic {
+    font-family: 'Sacramento', cursive !important;
+}
+
+.font-arabic {
+    font-family: 'Noto Naskh Arabic', serif !important;
+}
+
+.img-center-crop {
+    width: 13rem;
+    height: 13rem;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+html[data-bs-theme="dark"] .btn-transparent {
+    background-color: rgba(var(--bs-dark-rgb), 0.5) !important;
+    backdrop-filter: blur(0.625rem);
+}
+
+html[data-bs-theme="light"] .btn-transparent {
+    background-color: rgba(var(--bs-light-rgb), 0.5) !important;
+    backdrop-filter: blur(0.625rem);
+}
+
+.loading-page {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1056;
+}
+
+html[data-bs-theme="light"] .color-theme-svg {
+    color: rgb(255, 255, 255);
+    background-color: var(--bs-light);
+}
+
+html[data-bs-theme="dark"] .color-theme-svg {
+    color: rgb(0, 0, 0);
+    background-color: var(--bs-dark);
+}
+
+/* Resolve Conflict: Prefer var(--background-color) over rgba for consistency */
+html[data-bs-theme="light"] .bg-light-dark {
+    background-color: var(--background-color);
+}
+
+html[data-bs-theme="dark"] .bg-light-dark {
+    background-color: var(--background-color);
+}
+
+html[data-bs-theme="light"] .bg-white-black {
+    background-color: var(--background-color);
+}
+
+html[data-bs-theme="dark"] .bg-white-black {
+    background-color: var(--background-color);
+}
+
+.bg-cover-home {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mask-image: linear-gradient(0.5turn, transparent, black 10%, black 90%, transparent);
+}
+
+.width-loading {
+    width: 25%;
+}
+
+@media screen and (max-width: 992px) {
+    .width-loading {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .width-loading {
+        width: 75%;
+    }
+}
+
+.no-gap-bottom {
+    margin-bottom: -0.75rem !important;
+}
