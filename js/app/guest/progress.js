@@ -1,5 +1,4 @@
 export const progress = (() => {
-
     /**
      * @type {HTMLElement|null}
      */
@@ -13,6 +12,8 @@ export const progress = (() => {
     let total = 0;
     let loaded = 0;
     let valid = true;
+    let lastUpdate = 0;
+    const UPDATE_INTERVAL = 100; // Minimum time between updates in ms
 
     /**
      * @type {Promise<void>|null}
@@ -24,6 +25,7 @@ export const progress = (() => {
      */
     const add = () => {
         total += 1;
+        updateProgress();
     };
 
     /**
@@ -31,6 +33,22 @@ export const progress = (() => {
      */
     const showInformation = () => {
         return `(${loaded}/${total}) [${parseInt((loaded / total) * 100).toFixed(0)}%]`;
+    };
+
+    /**
+     * Updates the progress bar with throttling
+     */
+    const updateProgress = () => {
+        const now = Date.now();
+        if (now - lastUpdate < UPDATE_INTERVAL) {
+            return;
+        }
+        lastUpdate = now;
+
+        if (info && bar) {
+            info.innerText = showInformation();
+            bar.style.width = Math.min((loaded / total) * 100, 100).toString() + '%';
+        }
     };
 
     /**
@@ -44,8 +62,10 @@ export const progress = (() => {
         }
 
         loaded += 1;
-        info.innerText = `Loading ${type} ${skip ? 'skipped' : 'complete'} ${showInformation()}`;
-        bar.style.width = Math.min((loaded / total) * 100, 100).toString() + '%';
+        if (info) {
+            info.innerText = `Loading ${type} ${skip ? 'skipped' : 'complete'} ${showInformation()}`;
+        }
+        updateProgress();
 
         if (loaded === total) {
             document.dispatchEvent(new Event('undangan.progress.done'));
@@ -59,8 +79,12 @@ export const progress = (() => {
     const invalid = (type) => {
         if (valid) {
             valid = false;
-            bar.style.backgroundColor = 'red';
-            info.innerText = `Error loading ${type} ${showInformation()}`;
+            if (bar) {
+                bar.style.backgroundColor = 'red';
+            }
+            if (info) {
+                info.innerText = `Error loading ${type} ${showInformation()}`;
+            }
             document.dispatchEvent(new Event('undangan.progress.invalid'));
         }
     };
@@ -76,15 +100,17 @@ export const progress = (() => {
     const init = () => {
         info = document.getElementById('progress-info');
         bar = document.getElementById('progress-bar');
-        info.classList.remove('d-none');
+        if (info) {
+            info.classList.remove('d-none');
+        }
         cancelProgress = new Promise((res) => document.addEventListener('undangan.progress.invalid', res));
     };
 
     return {
-        init,
         add,
-        invalid,
         complete,
+        invalid,
         getAbort,
+        init,
     };
 })();

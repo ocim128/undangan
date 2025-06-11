@@ -24,14 +24,28 @@ export const audio = (() => {
         let audioEl = null;
 
         try {
-            audioEl = new Audio(await cache('audio').get(url, progress.getAbort()));
+            // Preload audio with low priority
+            audioEl = new Audio();
+            audioEl.preload = 'metadata';
+            audioEl.src = await cache('audio').get(url, progress.getAbort());
             audioEl.loop = true;
-            audioEl.muted = false;
+            audioEl.muted = true; // Start muted to prevent autoplay issues
             audioEl.autoplay = false;
             audioEl.controls = false;
 
+            // Add event listeners for better error handling
+            audioEl.addEventListener('error', (e) => {
+                console.error('Audio loading error:', e);
+                progress.invalid('audio');
+            });
+
+            audioEl.addEventListener('canplaythrough', () => {
+                progress.complete('audio');
+            });
+
             progress.complete('audio');
-        } catch {
+        } catch (err) {
+            console.error('Audio initialization error:', err);
             progress.invalid('audio');
             return;
         }
@@ -49,13 +63,16 @@ export const audio = (() => {
 
             music.disabled = true;
             try {
+                audioEl.muted = false; // Unmute when user initiates play
                 await audioEl.play();
                 isPlay = true;
                 music.disabled = false;
                 music.innerHTML = statePlay;
             } catch (err) {
+                console.error('Audio playback error:', err);
                 isPlay = false;
-                alert(err);
+                audioEl.muted = true;
+                alert('Unable to play audio. Please try again.');
             }
         };
 
@@ -65,6 +82,7 @@ export const audio = (() => {
         const pause = () => {
             isPlay = false;
             audioEl.pause();
+            audioEl.muted = true; // Mute when paused
             music.innerHTML = statePause;
         };
 
