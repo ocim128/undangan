@@ -28,6 +28,10 @@ export const image = (() => {
         i.onload = () => res(i);
         i.onerror = rej;
         i.src = src;
+        // Add loading priority for above-the-fold images
+        if (src.includes('bg.webp') || src.includes('icon-192x192.png')) {
+            i.fetchPriority = 'high';
+        }
     });
 
     /** 
@@ -52,6 +56,14 @@ export const image = (() => {
         // Use random URL for slide-desktop images, otherwise use data-src
         const isBgAnimation = el.closest('.slide-desktop') !== null;
         const url = isBgAnimation ? getRandomLocalImageUrl() : el.getAttribute('data-src');
+        
+        // Add loading priority for above-the-fold images
+        if (el.getAttribute('data-fetch-img') === 'high') {
+            el.loading = 'eager';
+        } else {
+            el.loading = 'lazy';
+        }
+        
         urlCache.push({
             url: url,
             res: (url) => appendImage(el, url),
