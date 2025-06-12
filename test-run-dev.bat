@@ -8,7 +8,7 @@ set PROJECT_DIR=C:\Users\user\Documents\undangan\undangan
 set BROWSER="C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
 
 :: URL to open
-set URL=http://localhost:8000
+set URL=http://localhost:8000?to=Namehere
 
 :: Check if npm is already running on port 8000 (default Vite port)
 netstat -aon | findstr :8000 | findstr LISTENING >nul

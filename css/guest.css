@@ -112,7 +112,7 @@ body {
 }
 
 .font-elegant-bold {
-    font-family: 'Playfair Display', serif !important;
+    font-family: 'Playfair Display', serif;
     font-weight: 700;
 }
 
@@ -389,6 +389,7 @@ small {
     font-weight: 500;
     transition: all var(--transition-normal);
     position: relative;
+    padding: var(--spacing-sm) var(--spacing-xs);
 }
 
 .navbar-nav .nav-link::after {
@@ -507,7 +508,7 @@ small {
     h4 { font-size: 1.25rem; }
     
     .btn {
-        padding: var(--spacing-xs) var(--spacing-md);
+        padding: 0.75rem var(--spacing-md);
         font-size: 0.9rem;
     }
     
@@ -522,14 +523,14 @@ small {
 }
 
 @media screen and (max-width: 576px) {
-    .width-loading { width: 75%; }
+    .width-loading { width: 90%; }
     
     h1 { font-size: 1.75rem; }
     h2 { font-size: 1.5rem; }
     h3 { font-size: 1.25rem; }
     
     .btn {
-        padding: var(--spacing-xs) var(--spacing-sm);
+        padding: 0.65rem var(--spacing-sm);
         font-size: 0.875rem;
     }
     
@@ -545,6 +546,11 @@ small {
     :root {
         --spacing-xl: 2rem;
         --spacing-lg: 1.5rem;
+    }
+
+    section.bg-light-dark .bg-theme-auto {
+        margin-left: var(--spacing-sm) !important;
+        margin-right: var(--spacing-sm) !important;
     }
 }
 
@@ -598,4 +604,69 @@ small {
         box-shadow: none !important;
         border: 1px solid #ddd !important;
     }
+}
+
+/* ==================== SKELETON LOADERS ==================== */
+.skeleton {
+    background-color: #e2e2e2;
+    border-radius: 0.5rem;
+    min-height: 1em;
+    position: relative;
+    overflow: hidden;
+}
+.skeleton::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -150%;
+    height: 100%;
+    width: 150%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: skeleton-shimmer 1.2s infinite;
+}
+@keyframes skeleton-shimmer {
+    0% { left: -150%; }
+    100% { left: 100%; }
+}
+.skeleton-img {
+    width: 100%;
+    height: 200px;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
+.skeleton-text {
+    width: 80%;
+    height: 1.2em;
+    margin-bottom: 0.5em;
+}
+.skeleton-btn {
+    width: 120px;
+    height: 2.2em;
+    border-radius: 2em;
+    margin: 0.5em auto;
+}
+
+/* Guest name styling */
+#guest-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--primary-maroon);
+    margin: 1rem 0;
+}
+
+#guest-name p {
+    font-size: 2rem !important;
+    margin: 0.5rem 0 !important;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#guest-name small {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.9rem !important;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 0.5rem !important;
 }

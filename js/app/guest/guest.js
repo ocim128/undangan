@@ -313,6 +313,10 @@
 
 	        // remove loading screen and show welcome screen.
 	        await util.changeOpacity(document.getElementById('loading'), false).then((el) => el.remove());
+
+	        // Hide skeleton loaders when content is loaded
+	        document.getElementById('skeleton-hero')?.classList.add('d-none');
+	        document.getElementById('skeleton-gallery')?.classList.add('d-none');
 	    };
 
 	    /**
